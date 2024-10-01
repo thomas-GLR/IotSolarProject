@@ -1,0 +1,15 @@
+.nav-menu {
+  background: #F1F1F1;
+  position: fixed;
+  bottom: 0;
+  height: 45px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

@@ -1,0 +1,32 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .topbar {
+    position: fixed;
+    top: 0;
+    height: 45px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+    .settings-button {
+
+      button {
+        width: 50px;
+        height: 50px;
+
+        .mat-icon {
+          color: #32CD32;
+          font-size: 35px;
+          height: 35px;
+          width: 35px;
+        }
+      }
+    }
+  }
+
+  .content {
+  }
+}

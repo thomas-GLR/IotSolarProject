@@ -1,0 +1,20 @@
+<div class="settings">
+  <mat-form-field>
+    <mat-label>Clearable input</mat-label>
+    <input matInput type="text" [(ngModel)]="apiUrl">
+    @if (apiUrl) {
+      <button matSuffix mat-icon-button aria-label="Clear" (click)="apiUrl=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    }
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Clearable input</mat-label>
+    <input matInput type="number" [(ngModel)]="apiPort">
+    @if (apiPort) {
+      <button matSuffix mat-icon-button aria-label="Clear" (click)="apiPort=null">
+        <mat-icon>close</mat-icon>
+      </button>
+    }
+  </mat-form-field>
+</div>
