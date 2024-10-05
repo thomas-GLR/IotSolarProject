@@ -8,5 +8,6 @@ export const routes: Routes = [
   { path: 'accueil', component: HomeComponent },
   { path: 'parametre', component: SettingsComponent },
   { path: 'temperatures', component: TemperatureListComponent },
-  { path: 'action', component: ActionsComponent }
+  { path: 'action', component: ActionsComponent },
+  { path: '**', redirectTo: 'accueil' }
 ];

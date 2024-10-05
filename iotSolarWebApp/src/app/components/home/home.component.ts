@@ -1,25 +1,38 @@
 import { Component, OnInit } from '@angular/core';
-import { HomeStore } from "../../store/home.store";
-import { TemperatureDisplayComponent } from "./temperature-display/temperature-display.component";
-import { AsyncPipe } from "@angular/common";
+import { TemperatureDisplayComponent } from './temperature-display/temperature-display.component';
+import { AsyncPipe } from '@angular/common';
+import { AlertComponent } from '../../shared/components/alert/alert.component';
+import { Temperature } from '../../models/temperature.model';
+import { TemperatureStore } from '../../store/temperature.store';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     TemperatureDisplayComponent,
-    AsyncPipe
+    AsyncPipe,
+    AlertComponent
   ],
-  providers: [HomeStore],
+  providers: [TemperatureStore],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
-  temperatures$ = this.homeStore.temperatures$;
-  constructor(private readonly homeStore: HomeStore) {
+
+  temperatures: Temperature[] = [];
+  error: string = '';
+
+  temperatures$ = this.temperatureStore.temperatures$.subscribe((temperatures) => {
+    this.temperatures = temperatures;
+  });
+  error$ = this.temperatureStore.error$.subscribe((error) => {
+    this.error = error ? error.message : '';
+  });
+
+  constructor(private readonly temperatureStore: TemperatureStore) {
   }
 
   ngOnInit() {
-    this.homeStore.getTemperatures();
+    this.temperatureStore.getLastTemperaturesFromReadingDevice();
   }
 }

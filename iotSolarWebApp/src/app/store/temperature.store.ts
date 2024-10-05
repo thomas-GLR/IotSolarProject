@@ -1,8 +1,57 @@
 import { ComponentStore } from "@ngrx/component-store";
-import { TemperatureState } from "../models/temperature-state.model";
+import { Injectable } from "@angular/core";
 import { TemperaturesService } from "../services/temperatures.service";
-import { inject } from "@angular/core";
+import { HomeState } from "../models/home-state.model";
+import { exhaustMap, tap } from "rxjs";
+import { HttpErrorResponse } from "@angular/common/http";
+import { Temperature } from "../models/temperature.model";
 
-export class TemperatureStore extends ComponentStore<TemperatureState> {
-  private temperatureService: TemperaturesService = inject(TemperaturesService);
+@Injectable()
+export class TemperatureStore extends ComponentStore<HomeState> {
+  constructor(private temperatureService: TemperaturesService) {
+    super({temperatures: [], error: null});
+  }
+
+  readonly getLastTemperaturesFromReadingDevice = this.effect<void>(
+    (trigger$) => trigger$.pipe(
+      exhaustMap(() =>
+        this.temperatureService.getReadingDeviceWithLastTemperature().pipe(
+          tap({
+            next: (temperatures: Temperature[]) => this.addAllTemperatures(temperatures),
+            error: (error: HttpErrorResponse) => this.updateError(error),
+          })
+        )
+      )
+    )
+  );
+
+  readonly getAllTemperatures = this.effect<void>(
+    (trigger$) => trigger$.pipe(
+      exhaustMap(() =>
+        this.temperatureService.getAllTemperatures().pipe(
+          tap({
+            next: (temperatures: Temperature[]) => this.addAllTemperatures(temperatures),
+            error: (error: HttpErrorResponse) => this.updateError(error),
+          })
+        )
+      )
+    )
+  );
+
+  addAllTemperatures(temperatures: Temperature[]) {
+    this.patchState({
+      temperatures: temperatures,
+      error: null
+    });
+  }
+
+  updateError(error: HttpErrorResponse) {
+    this.patchState((state) => ({
+      ...state,
+      error: error
+    }));
+  }
+
+  readonly temperatures$ = this.select(state => state.temperatures);
+  readonly error$ = this.select(state => state.error);
 }

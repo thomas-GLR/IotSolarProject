@@ -1,9 +1,9 @@
 import { Temperature } from "./temperature.model";
 
 export enum ReadingDeviceName {
-  TOP,
-  MIDDLE,
-  BOTTOM
+  TOP = 'TOP',
+  MIDDLE = 'MIDDLE',
+  BOTTOM = 'BOTTOM'
 }
 
 export interface IReadingDeviceDto {

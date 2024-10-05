@@ -1,5 +1,8 @@
-<div class="temperatures">
-  @for (temperature of (this.temperatures$ | async); track temperature.id) {
-    <app-temperature-display [temperatureValue]="temperature.value" [readingDeviceName]="temperature.readingDeviceName"></app-temperature-display>
-  }
+<div class="accueil">
+  <app-alert [messageAlert]="error"></app-alert>
+  <div class="temperatures">
+    @for (temperature of temperatures; track temperature.id) {
+      <app-temperature-display [temperatureValue]="temperature.value" [readingDeviceName]="temperature.readingDeviceName"></app-temperature-display>
+    }
+  </div>
 </div>

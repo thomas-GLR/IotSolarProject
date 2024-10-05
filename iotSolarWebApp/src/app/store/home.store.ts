@@ -40,5 +40,5 @@ export class HomeStore extends ComponentStore<HomeState> {
   }
 
   readonly temperatures$ = this.select(state => state.temperatures);
-  readonly error = this.select(state => state.error);
+  readonly error$ = this.select(state => state.error);
 }

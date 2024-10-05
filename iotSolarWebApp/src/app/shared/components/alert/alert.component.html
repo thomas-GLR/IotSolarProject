@@ -1,0 +1,8 @@
+<div class="{{ showAlert ? 'alert' : '' }}" [hidden]="!showAlert">
+  <div class="alert-message">
+    <span>{{ messageAlert }}</span>
+    <button matSuffix mat-icon-button aria-label="Clear" (click)="showAlert=false">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</div>

@@ -1,20 +1,25 @@
 <div class="settings">
-  <mat-form-field>
-    <mat-label>Clearable input</mat-label>
-    <input matInput type="text" [(ngModel)]="apiUrl">
-    @if (apiUrl) {
-      <button matSuffix mat-icon-button aria-label="Clear" (click)="apiUrl=''">
-        <mat-icon>close</mat-icon>
-      </button>
-    }
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Clearable input</mat-label>
-    <input matInput type="number" [(ngModel)]="apiPort">
-    @if (apiPort) {
-      <button matSuffix mat-icon-button aria-label="Clear" (click)="apiPort=null">
-        <mat-icon>close</mat-icon>
-      </button>
-    }
-  </mat-form-field>
+  <div class="api-url">
+    <mat-form-field>
+      <mat-label>URL de l'API</mat-label>
+      <input matInput type="text" [(ngModel)]="apiUrl" placeholder="https://mon-url">
+      @if (this.apiUrl) {
+        <button matSuffix mat-icon-button aria-label="Clear" (click)="apiUrl=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+    </mat-form-field>
+  </div>
+  <div class="api-port">
+    <mat-form-field>
+      <mat-label>Port de l'API</mat-label>
+      <input matInput type="number" [(ngModel)]="apiPort" placeholder="3000">
+      @if (this.apiPort) {
+        <button matSuffix mat-icon-button aria-label="Clear" (click)="apiPort=null">
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+    </mat-form-field>
+  </div>
+  <button mat-flat-button (click)="saveInfo()">Sauvegarder</button>
 </div>

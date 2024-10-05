@@ -13,6 +13,12 @@ export class TemperaturesService {
     private readingDevicesService: ReadingDevicesService,
   ) {}
 
+  getAllTemperatures(): Promise<Temperature[]> {
+    return this.temperaturesRepository.find({
+      relations: ['readingDevice'],
+    });
+  }
+
   async createTemperature(
     temperatureDto: TemperatureDto,
   ): Promise<Temperature> {

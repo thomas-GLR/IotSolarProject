@@ -1,14 +1,19 @@
-.temperatures {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
-  height: 100%;
+.accueil {
+  margin-top: 50px;
+
+  .temperatures {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+  }
 }
 
 @media screen and (min-width: 500px) {
-  .temperatures {
-    flex-direction: row;
+  .accueil {
+    .temperatures {
+      flex-direction: row;
+    }
   }
 }

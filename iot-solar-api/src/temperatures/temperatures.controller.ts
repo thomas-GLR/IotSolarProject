@@ -2,6 +2,7 @@ import { Body, Controller, Get, HttpCode, HttpStatus, Logger, Post } from '@nest
 import { TemperatureDto } from './temperature.dto';
 import { TemperaturesService } from './temperatures.service';
 import { ReadingDevicesService } from '../reading-devices/reading-devices.service';
+import { Temperature } from './temperature.entity';
 
 @Controller('temperatures')
 export class TemperaturesController {
@@ -11,6 +12,31 @@ export class TemperaturesController {
     private temperaturesService: TemperaturesService,
     private readingDevicesService: ReadingDevicesService,
   ) {}
+
+  @Get()
+  async getAllTemperatures(): Promise<TemperatureDto[]> {
+    let temperaturesDtos: TemperatureDto[] = [];
+    await this.temperaturesService.getAllTemperatures().then((temperatures) => {
+      temperaturesDtos = temperatures
+        .sort((a, b) => b.collectionDateToDate() - a.collectionDateToDate())
+        .map((temperature) => {
+          return <TemperatureDto>{
+            id: temperature.id,
+            value: temperature.value,
+            collectionDate: temperature.collectionDate,
+            readingDeviceName: temperature.readingDevice.name,
+          };
+        });
+    });
+
+    return temperaturesDtos;
+  }
+
+  @Post()
+  @HttpCode(HttpStatus.CREATED)
+  create(@Body() temperatureDto: TemperatureDto) {
+    this.temperaturesService.createTemperature(temperatureDto);
+  }
 
   @Get('last-temperatures')
   async getLastTemperaturesFromReadingDevice(): Promise<TemperatureDto[]> {
@@ -31,11 +57,5 @@ export class TemperaturesController {
     });
 
     return temperatures;
-  }
-
-  @Post()
-  @HttpCode(HttpStatus.CREATED)
-  create(@Body() temperatureDto: TemperatureDto) {
-    this.temperaturesService.createTemperature(temperatureDto);
   }
 }

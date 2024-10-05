@@ -1,1 +1,28 @@
-<p>temperature-list works!</p>
+<div class="list-temperature">
+  <app-alert [messageAlert]="error"></app-alert>
+  <div class="table">
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <!-- Date -->
+      <ng-container matColumnDef="collectionDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Date</th>
+        <td mat-cell *matCellDef="let row"> {{ row.collectionDate | date:"dd / MM / yyyy" }}</td>
+      </ng-container>
+
+      <!-- Value -->
+      <ng-container matColumnDef="value">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Valeur</th>
+        <td mat-cell *matCellDef="let row"> {{ row.value }}°C</td>
+      </ng-container>
+
+      <!-- Reading device name -->
+      <ng-container matColumnDef="readingDeviceName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Capteur</th>
+        <td mat-cell *matCellDef="let row"> {{ determinReadingDeviceName(row.readingDeviceName) }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</div>
