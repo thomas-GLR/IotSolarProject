@@ -3,6 +3,7 @@ import { TemperatureDto } from './temperature.dto';
 import { TemperaturesService } from './temperatures.service';
 import { ReadingDevicesService } from '../reading-devices/reading-devices.service';
 import { Temperature } from './temperature.entity';
+import { CreateTemperatureDto } from './create-temperature.dto';
 
 @Controller('temperatures')
 export class TemperaturesController {
@@ -34,8 +35,8 @@ export class TemperaturesController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  create(@Body() temperatureDto: TemperatureDto) {
-    this.temperaturesService.createTemperature(temperatureDto);
+  create(@Body() createTemperatureDto: CreateTemperatureDto) {
+    this.temperaturesService.createTemperature(createTemperatureDto);
   }
 
   @Get('last-temperatures')

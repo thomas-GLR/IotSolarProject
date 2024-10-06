@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TemperatureDto } from './temperature.dto';
 import { ReadingDevicesService } from '../reading-devices/reading-devices.service';
+import { CreateTemperatureDto } from './create-temperature.dto';
 
 @Injectable()
 export class TemperaturesService {
@@ -20,15 +21,16 @@ export class TemperaturesService {
   }
 
   async createTemperature(
-    temperatureDto: TemperatureDto,
+    createTemperatureDto: CreateTemperatureDto,
   ): Promise<Temperature> {
+    const currentDateTime = new Date();
     const readingDevice = await this.readingDevicesService.findByName(
-      temperatureDto.readingDeviceName,
+      createTemperatureDto.sensorName,
     );
 
     const temperature = new Temperature();
-    temperature.value = temperatureDto.value;
-    temperature.collectionDate = temperatureDto.collectionDate;
+    temperature.value = createTemperatureDto.value;
+    temperature.collectionDate = currentDateTime;
     temperature.readingDevice = readingDevice;
 
     return await this.temperaturesRepository.save(temperature);
